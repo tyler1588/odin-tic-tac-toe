@@ -42,6 +42,10 @@ function createPlayer(role){
     document.querySelector('.currentPlayer').innerHTML = "Player X's turn";
     document.body.addEventListener('click', function(event){
         if (event.target.className === 'board-block'){
+            const updateBlock = document.getElementById(event.target.id);
+            if (updateBlock.querySelector('p').innerHTML != ""){
+                return
+            }
             if (player1.roundsPlayed <= player2.roundsPlayed){
                 currentPlayer = player1;
                 nextPlayer = player2;
@@ -52,28 +56,32 @@ function createPlayer(role){
             document.querySelector('.currentPlayer').innerHTML = ("Player " + nextPlayer.role + "'s turn");
             const updateBoard = newBoard.updateBoard(event.target.id,currentPlayer.role);
             currentPlayer.updateRoundsPlayed();
-            const updateBlock = document.getElementById(event.target.id);
             updateBlock.querySelector('p').innerHTML = currentPlayer.role;
+            let winner;
             for (let i = 0; i < newBoard.board.length; i++){
                 //Check that the board isn't empty
                 if (newBoard.board[i] != ""){
                     //Check for horizontal winner
                     if ((i === 0 || i === 3 || i === 6) && newBoard.board[i] === newBoard.board[i+1] && newBoard.board[i+1] === newBoard.board[i+2]){
-                        console.log("The winner is " + newBoard.board[i])
+                        winner = newBoard.board[i];
                     }
                     //Check for vertical winner
                     if ((i === 0 || i === 1 || i === 2) && newBoard.board[i] === newBoard.board[i+3] && newBoard.board[i+3] === newBoard.board[i+6]){
-                        console.log("The winner is " + newBoard.board[i])
+                        winner = newBoard.board[i];
                     }
                     //Check for left diagonal winner
                     if (i === 4 && newBoard.board[i] === newBoard.board[i-4] && newBoard.board[i] === newBoard.board[i+4]){
-                        console.log("The winner is " + newBoard.board[i])
+                        winner = newBoard.board[i];
                     }
                     //Check for right diagonal winner
                     if (i === 4 && newBoard.board[i] === newBoard.board[i-2] && newBoard.board[i] === newBoard.board[i+2]){
-                        console.log("The winner is " + newBoard.board[i])
+                        winner = newBoard.board[i];
                     }
                 }
+            }
+            if (winner){
+                document.querySelector('.currentPlayer').innerHTML = ("The winner is " + winner + "!");
+                
             }  
         }
     })
