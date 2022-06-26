@@ -38,13 +38,18 @@ function createPlayer(role){
     const player2 = createPlayer('O');
     const newBoard = gameBoard();
     let currentPlayer;
+    let nextPlayer;
+    document.querySelector('.currentPlayer').innerHTML = "Player X's turn";
     document.body.addEventListener('click', function(event){
         if (event.target.className === 'board-block'){
             if (player1.roundsPlayed <= player2.roundsPlayed){
                 currentPlayer = player1;
+                nextPlayer = player2;
             } else {
                 currentPlayer = player2;
+                nextPlayer = player1;
             }
+            document.querySelector('.currentPlayer').innerHTML = ("Player " + nextPlayer.role + "'s turn");
             const updateBoard = newBoard.updateBoard(event.target.id,currentPlayer.role);
             currentPlayer.updateRoundsPlayed();
             const updateBlock = document.getElementById(event.target.id);
@@ -69,8 +74,7 @@ function createPlayer(role){
                         console.log("The winner is " + newBoard.board[i])
                     }
                 }
-            }
-            
+            }  
         }
     })
 })();
