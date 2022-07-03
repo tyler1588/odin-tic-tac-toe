@@ -6,6 +6,7 @@ body {
     text-align: center;
     font-size: 3rem;
     background-color: grey;
+    height: 4rem;
 }
 
 .board {
@@ -33,4 +34,10 @@ body {
 .board-block:hover{
     background-color: lightgrey;
     transition: 0.3s;
+}
+
+.modal {
+    max-width: 50vw;
+    max-height: 50vh;
+    text-align: center;
 }

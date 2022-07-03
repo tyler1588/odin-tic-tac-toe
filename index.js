@@ -10,6 +10,7 @@ gameBoard = () => {
 }
 
 (function displayBoard(){
+
     for (let i = 0; i < gameBoard().board.length; i++){
         const div = document.createElement('div');
         const text = document.createElement('p');
@@ -78,11 +79,32 @@ function createPlayer(role){
                         winner = newBoard.board[i];
                     }
                 }
+                if (!newBoard.board.includes('')){
+                    document.querySelector('.currentPlayer').innerHTML = ("");
+                    modal();
+                }
             }
             if (winner){
-                document.querySelector('.currentPlayer').innerHTML = ("The winner is " + winner + "!");
-                
-            }  
+                document.querySelector('.currentPlayer').innerHTML = ("");
+                modal(winner);
+            } 
         }
     })
 })();
+
+function modal(winner){
+    const modal = document.querySelector('#modal');
+    modal.showModal();
+    if (winner){
+        document.querySelector('.newGameText').innerHTML = ("The winner is " + winner + "!");
+    } else {
+        document.querySelector('.newGameText').innerHTML = ("Tie Game");
+    }
+    
+    const closeModal = document.querySelector('.close-button');
+
+    closeModal.addEventListener('click', () => {
+        modal.close();
+        window.location.reload();
+    });
+}
